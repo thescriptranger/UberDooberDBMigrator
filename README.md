@@ -952,4 +952,4 @@ This is Public - feel free to use as you wish, or create your own branch and pus
 
 ## Support
 
-mailto:thescriptranger@gmail.com
+thescriptranger@gmail.com
