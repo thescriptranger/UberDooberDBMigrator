@@ -948,12 +948,8 @@ Use a different port: `PORT=8080 npm start`
 
 ## License
 
-[Your License Here]
-
-## Contributing
-
-[Your Contributing Guidelines Here]
+This is Public - feel free to use as you wish, or create your own branch and push to this repo.
 
 ## Support
 
-[Your Support Information Here]
+mailto:thescriptranger@gmail.com
