@@ -1,0 +1,22 @@
+{
+  "name": "uberdooberdbmigrator-web",
+  "version": "1.0.0",
+  "description": "Web dashboard for monitoring UberDooberDBMigrator progress",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "database",
+    "migration",
+    "dashboard",
+    "monitoring"
+  ],
+  "author": "UberDooberDBMigrator",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "chokidar": "^3.5.3"
+  }
+}

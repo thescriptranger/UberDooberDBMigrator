@@ -1,0 +1,32 @@
+{
+    "migrationName": "SampleMigration",
+    "startedAt": "2025-06-03T14:30:00Z",
+    "lastUpdatedAt": "2025-06-03T14:58:17Z",
+    "status": "InProgress",
+    "tables": [
+        {
+            "sourceTable": "dbo.Customers",
+            "targetTable": "dbo.tblCustomers",
+            "status": "Completed",
+            "totalRows": 125000,
+            "processedRows": 125000,
+            "lastBatchKeyValue": null
+        },
+        {
+            "sourceTable": "dbo.Orders",
+            "targetTable": "sales.CustomerOrders",
+            "status": "InProgress",
+            "totalRows": 890000,
+            "processedRows": 350000,
+            "lastBatchKeyValue": "350274"
+        },
+        {
+            "sourceTable": "dbo.Countries",
+            "targetTable": "ref.Countries",
+            "status": "Pending",
+            "totalRows": 0,
+            "processedRows": 0,
+            "lastBatchKeyValue": null
+        }
+    ]
+}

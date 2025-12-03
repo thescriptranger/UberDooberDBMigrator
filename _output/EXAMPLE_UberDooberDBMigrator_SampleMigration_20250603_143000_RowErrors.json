@@ -1,0 +1,107 @@
+{
+    "migrationName": "SampleMigration",
+    "migrationRunId": "20250603_143000",
+    "generatedAt": "2025-06-03T15:45:32Z",
+    "totalRowErrors": 7,
+    "tables": [
+        {
+            "sourceTable": "dbo.Customers",
+            "targetTable": "dbo.tblCustomers",
+            "errorCount": 3,
+            "rows": [
+                {
+                    "sourceKeyValue": "45892",
+                    "errorTimestamp": "2025-06-03T14:35:22Z",
+                    "errorMessage": "String or binary data would be truncated in table 'TargetDB.dbo.tblCustomers', column 'FullName'.",
+                    "sourceData": {
+                        "CustID": 45892,
+                        "FirstName": "Christopher",
+                        "LastName": "Alexandropoulos-Konstantinidis",
+                        "Email": "chris.alex@longdomainname.example.com",
+                        "StatusCode": "A"
+                    }
+                },
+                {
+                    "sourceKeyValue": "67234",
+                    "errorTimestamp": "2025-06-03T14:38:45Z",
+                    "errorMessage": "Cannot insert the value NULL into column 'EmailAddress', table 'TargetDB.dbo.tblCustomers'; column does not allow nulls.",
+                    "sourceData": {
+                        "CustID": 67234,
+                        "FirstName": "Jane",
+                        "LastName": "Doe",
+                        "Email": null,
+                        "StatusCode": "A"
+                    }
+                },
+                {
+                    "sourceKeyValue": "89001",
+                    "errorTimestamp": "2025-06-03T14:42:11Z",
+                    "errorMessage": "Conversion failed when converting date and/or time from character string.",
+                    "sourceData": {
+                        "CustID": 89001,
+                        "FirstName": "Robert",
+                        "LastName": "Smith",
+                        "Email": "rsmith@example.com",
+                        "StatusCode": "A",
+                        "CreatedDate": "13/25/2024"
+                    }
+                }
+            ]
+        },
+        {
+            "sourceTable": "dbo.Orders",
+            "targetTable": "sales.CustomerOrders",
+            "errorCount": 4,
+            "rows": [
+                {
+                    "sourceKeyValue": "1045287",
+                    "errorTimestamp": "2025-06-03T15:12:33Z",
+                    "errorMessage": "Key mapping not found for OldKey: 99999 in SourceDB.Customers",
+                    "sourceData": {
+                        "OrderID": 1045287,
+                        "CustID": 99999,
+                        "OrderDate": "2024-03-15",
+                        "TotalAmt": 459.99,
+                        "Status": "C"
+                    }
+                },
+                {
+                    "sourceKeyValue": "1045288",
+                    "errorTimestamp": "2025-06-03T15:12:33Z",
+                    "errorMessage": "Key mapping not found for OldKey: 99999 in SourceDB.Customers",
+                    "sourceData": {
+                        "OrderID": 1045288,
+                        "CustID": 99999,
+                        "OrderDate": "2024-03-16",
+                        "TotalAmt": 125.00,
+                        "Status": "C"
+                    }
+                },
+                {
+                    "sourceKeyValue": "1089234",
+                    "errorTimestamp": "2025-06-03T15:28:47Z",
+                    "errorMessage": "Arithmetic overflow error converting numeric to data type decimal.",
+                    "sourceData": {
+                        "OrderID": 1089234,
+                        "CustID": 5421,
+                        "OrderDate": "2024-05-22",
+                        "TotalAmt": 9999999999.99,
+                        "Status": "P"
+                    }
+                },
+                {
+                    "sourceKeyValue": "1102847",
+                    "errorTimestamp": "2025-06-03T15:35:19Z",
+                    "errorMessage": "Lookup value not found for 'X' in column Status",
+                    "sourceData": {
+                        "OrderID": 1102847,
+                        "CustID": 7823,
+                        "OrderDate": "2024-06-01",
+                        "TotalAmt": 75.50,
+                        "Status": "X"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+    UberDooberDBMigrator Table Mapping - Orders
+    
+    Demonstrates keyLookup for foreign key mapping when parent table generates new identities.
+    This table must run AFTER SourceDB.Customers (order="2" in MasterConfig).
+-->
+<TableMapping>
+    <Source schema="dbo" table="Orders" database="SourceDB" />
+    <Target schema="sales" table="CustomerOrders" />
+
+    <Settings>
+        <IdentityHandling>PreserveKeys</IdentityHandling>
+        <BatchColumn>OrderID</BatchColumn>
+        <ExistingDataAction>Truncate</ExistingDataAction>
+    </Settings>
+
+    <Columns>
+        <!-- KeyLookup: Map old CustomerID to new CustomerID from Customers migration -->
+        <Column type="keyLookup">
+            <Source column="CustID" />
+            <Target column="CustomerID" nullDefault="-1" />
+            <KeyMap sourceTable="SourceDB.Customers" sourceKeyColumn="CustID" />
+        </Column>
+
+        <!-- Lookup: Map order status codes -->
+        <Column type="lookup">
+            <Source column="Status" />
+            <Target column="OrderStatusID" />
+            <LookupTable>
+                <Map from="N" to="1" />
+                <Map from="P" to="2" />
+                <Map from="S" to="3" />
+                <Map from="C" to="4" />
+                <Default to="1" />
+            </LookupTable>
+        </Column>
+
+        <!-- Static: Mark as migrated -->
+        <Column type="static">
+            <Target column="IsMigrated" />
+            <Value literal="1" />
+        </Column>
+    </Columns>
+</TableMapping>

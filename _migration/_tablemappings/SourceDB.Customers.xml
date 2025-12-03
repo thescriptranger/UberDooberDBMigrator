@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!--
+    UberDooberDBMigrator Table Mapping Configuration
+    
+    This file defines table-level settings and column transformations.
+    Source and Target must match the corresponding entry in MasterConfig.xml.
+    
+    Settings:
+        - IdentityHandling: PreserveKeys or GenerateNew
+        - IdentityColumn: Target identity column name (required if GenerateNew)
+        - BatchColumn: Source column for batching (should match MasterConfig)
+        - ExistingDataAction: Truncate or Append
+    
+    Column Types:
+        - simple: Direct column mapping (usually in MasterConfig, but can override here)
+        - concat: Combine multiple columns/literals into one
+        - split: Split one column into multiple by delimiter
+        - lookup: Map values via inline lookup table
+        - calculated: SQL expression evaluated on source
+        - static: Hardcoded value or SQL function
+        - conditional: Different mappings based on source values
+        - convert: Data type conversion with explicit format
+        - keyLookup: Reference new identity from another migrated table
+    
+    Use nullDefault attribute on Target to specify default when source is NULL.
+-->
+<TableMapping>
+    <Source schema="dbo" table="Customers" database="SourceDB" />
+    <Target schema="dbo" table="tblCustomers" />
+
+    <Settings>
+        <IdentityHandling>GenerateNew</IdentityHandling>
+        <IdentityColumn>CustomerID</IdentityColumn>
+        <BatchColumn>CustID</BatchColumn>
+        <ExistingDataAction>Truncate</ExistingDataAction>
+    </Settings>
+
+    <Columns>
+        <!-- Concatenation: Combine FirstName and LastName into FullName -->
+        <Column type="concat">
+            <Source>
+                <Part column="FirstName" />
+                <Part literal=" " />
+                <Part column="LastName" />
+            </Source>
+            <Target column="FullName" />
+        </Column>
+
+        <!-- Split: Break FullAddress into Street and City by comma -->
+        <Column type="split">
+            <Source column="FullAddress" />
+            <Delimiter value=", " />
+            <Targets>
+                <Part index="0" column="Street" />
+                <Part index="1" column="City" />
+            </Targets>
+        </Column>
+
+        <!-- Lookup: Map status codes to status IDs -->
+        <Column type="lookup">
+            <Source column="StatusCode" />
+            <Target column="StatusID" nullDefault="0" />
+            <LookupTable>
+                <Map from="A" to="1" />
+                <Map from="I" to="2" />
+                <Map from="P" to="3" />
+                <Default to="0" />
+            </LookupTable>
+        </Column>
+
+        <!-- Calculated: Compute a value from source columns -->
+        <Column type="calculated">
+            <Expression>Price * Quantity</Expression>
+            <Target column="TotalAmount" />
+        </Column>
+
+        <!-- Static: Insert a hardcoded value or SQL function -->
+        <Column type="static">
+            <Target column="MigratedDate" />
+            <Value function="GETDATE()" />
+        </Column>
+
+        <Column type="static">
+            <Target column="Source" />
+            <Value literal="LegacySystem" />
+        </Column>
+
+        <!-- Conditional: Map differently based on source value -->
+        <Column type="conditional">
+            <Target column="CustomerType" />
+            <When test="AccountType = 'B'">
+                <Value literal="Business" />
+            </When>
+            <When test="AccountType = 'P'">
+                <Value literal="Personal" />
+            </When>
+            <Else>
+                <Value literal="Unknown" />
+            </Else>
+        </Column>
+
+        <!-- Convert: Explicit data type conversion with format -->
+        <Column type="convert">
+            <Source column="BirthDateString" format="MM/dd/yyyy" />
+            <Target column="BirthDate" type="datetime" />
+        </Column>
+    </Columns>
+</TableMapping>

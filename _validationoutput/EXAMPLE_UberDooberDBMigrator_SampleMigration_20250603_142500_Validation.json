@@ -1,0 +1,207 @@
+{
+    "migrationName": "SampleMigration",
+    "validatedAt": "2025-06-03T14:25:00Z",
+    "isValid": true,
+    "summary": {
+        "tablesValidated": 3,
+        "errorsFound": 0,
+        "warningsFound": 5
+    },
+    "configuration": {
+        "isValid": true,
+        "errors": [],
+        "warnings": []
+    },
+    "connections": {
+        "source": {
+            "isValid": true,
+            "provider": "SqlServer",
+            "server": "source-server.company.com",
+            "message": "Connection successful"
+        },
+        "target": {
+            "isValid": true,
+            "provider": "AzureSql",
+            "server": "target-server.database.windows.net",
+            "message": "Connection successful"
+        }
+    },
+    "tables": [
+        {
+            "sourceTable": "dbo.Customers",
+            "targetTable": "dbo.tblCustomers",
+            "isValid": true,
+            "sourceRowCount": 125000,
+            "errors": [],
+            "warnings": [
+                "Target column 'MiddleName' is not mapped and will use default value",
+                "Source column 'LegacyID' is not mapped and will be ignored"
+            ],
+            "sampleData": [
+                {
+                    "source": {
+                        "CustID": 1,
+                        "FirstName": "John",
+                        "LastName": "Smith",
+                        "Email": "jsmith@example.com",
+                        "StatusCode": "A",
+                        "CreatedDate": "2020-01-15"
+                    },
+                    "transformed": {
+                        "CustomerID": 1,
+                        "FullName": "John Smith",
+                        "EmailAddress": "jsmith@example.com",
+                        "StatusID": "1",
+                        "CreatedDate": "2020-01-15T00:00:00",
+                        "MigratedDate": "2025-06-03T14:25:00",
+                        "Source": "LegacySystem"
+                    }
+                },
+                {
+                    "source": {
+                        "CustID": 2,
+                        "FirstName": "Jane",
+                        "LastName": "Doe",
+                        "Email": "jdoe@example.com",
+                        "StatusCode": "I",
+                        "CreatedDate": "2020-02-20"
+                    },
+                    "transformed": {
+                        "CustomerID": 2,
+                        "FullName": "Jane Doe",
+                        "EmailAddress": "jdoe@example.com",
+                        "StatusID": "2",
+                        "CreatedDate": "2020-02-20T00:00:00",
+                        "MigratedDate": "2025-06-03T14:25:00",
+                        "Source": "LegacySystem"
+                    }
+                },
+                {
+                    "source": {
+                        "CustID": 3,
+                        "FirstName": "Robert",
+                        "LastName": "Johnson",
+                        "Email": "rjohnson@example.com",
+                        "StatusCode": "P",
+                        "CreatedDate": "2020-03-10"
+                    },
+                    "transformed": {
+                        "CustomerID": 3,
+                        "FullName": "Robert Johnson",
+                        "EmailAddress": "rjohnson@example.com",
+                        "StatusID": "3",
+                        "CreatedDate": "2020-03-10T00:00:00",
+                        "MigratedDate": "2025-06-03T14:25:00",
+                        "Source": "LegacySystem"
+                    }
+                }
+            ]
+        },
+        {
+            "sourceTable": "dbo.Orders",
+            "targetTable": "sales.CustomerOrders",
+            "isValid": true,
+            "sourceRowCount": 890000,
+            "errors": [],
+            "warnings": [
+                "Source column 'InternalNotes' is not mapped and will be ignored",
+                "Source column 'LegacyOrderNum' is not mapped and will be ignored"
+            ],
+            "sampleData": [
+                {
+                    "source": {
+                        "OrderID": 1001,
+                        "CustID": 1,
+                        "OrderDate": "2024-01-15 10:30:00",
+                        "TotalAmt": 150.00,
+                        "Status": "C"
+                    },
+                    "transformed": {
+                        "OrderID": 1001,
+                        "CustomerID": null,
+                        "OrderDate": "2024-01-15T10:30:00",
+                        "TotalAmount": 150.00,
+                        "OrderStatusID": "4",
+                        "IsMigrated": "1"
+                    }
+                },
+                {
+                    "source": {
+                        "OrderID": 1002,
+                        "CustID": 2,
+                        "OrderDate": "2024-01-16 14:22:00",
+                        "TotalAmt": 89.99,
+                        "Status": "P"
+                    },
+                    "transformed": {
+                        "OrderID": 1002,
+                        "CustomerID": null,
+                        "OrderDate": "2024-01-16T14:22:00",
+                        "TotalAmount": 89.99,
+                        "OrderStatusID": "2",
+                        "IsMigrated": "1"
+                    }
+                },
+                {
+                    "source": {
+                        "OrderID": 1003,
+                        "CustID": 1,
+                        "OrderDate": "2024-01-17 09:15:00",
+                        "TotalAmt": 245.50,
+                        "Status": "S"
+                    },
+                    "transformed": {
+                        "OrderID": 1003,
+                        "CustomerID": null,
+                        "OrderDate": "2024-01-17T09:15:00",
+                        "TotalAmount": 245.50,
+                        "OrderStatusID": "3",
+                        "IsMigrated": "1"
+                    }
+                }
+            ]
+        },
+        {
+            "sourceTable": "dbo.Countries",
+            "targetTable": "ref.Countries",
+            "isValid": true,
+            "sourceRowCount": 195,
+            "errors": [],
+            "warnings": [
+                "Target column 'ISO3Code' is not mapped and will use default value"
+            ],
+            "sampleData": [
+                {
+                    "source": {
+                        "CountryCode": "US",
+                        "CountryName": "United States"
+                    },
+                    "transformed": {
+                        "CountryCode": "US",
+                        "Name": "United States"
+                    }
+                },
+                {
+                    "source": {
+                        "CountryCode": "CA",
+                        "CountryName": "Canada"
+                    },
+                    "transformed": {
+                        "CountryCode": "CA",
+                        "Name": "Canada"
+                    }
+                },
+                {
+                    "source": {
+                        "CountryCode": "GB",
+                        "CountryName": "United Kingdom"
+                    },
+                    "transformed": {
+                        "CountryCode": "GB",
+                        "Name": "United Kingdom"
+                    }
+                }
+            ]
+        }
+    ]
+}

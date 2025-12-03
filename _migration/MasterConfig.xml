@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!--
+    UberDooberDBMigrator Master Migration Configuration
+    
+    This file defines the source/target connections, batch settings, and table mappings.
+    
+    Providers: Oracle, SqlServer, AzureSql, MySql, PostgreSql
+    AuthTypes: SqlAuth, WindowsAuth (SqlServer only), Interactive (Azure AD), AzureCli (Azure AD)
+    
+    If UserId or Password are empty and required by AuthType, the script will prompt at runtime.
+    
+    BatchSize: Number of rows per batch. Set to 0 to disable batching.
+    
+    Tables:
+        - order: Execution order (required)
+        - tableFilter: Set to "true" to include when -TableFilter parameter is used
+        - File: Reference to table mapping XML (optional - only needed for transformations or table-level settings)
+        - BatchColumn: Source column used for batching and resumability
+        - sourceFormat: Optional date format for source column parsing
+-->
+<MigrationConfig>
+    <MigrationName>SampleMigration</MigrationName>
+    <BatchSize>10000</BatchSize>
+    <QueryTimeoutSeconds>300</QueryTimeoutSeconds>
+
+    <SourceConnection>
+        <Provider>SqlServer</Provider>
+        <Server>source-server.company.com</Server>
+        <Database>SourceDB</Database>
+        <AuthType>SqlAuth</AuthType>
+        <UserId></UserId>
+        <Password></Password>
+    </SourceConnection>
+
+    <TargetConnection>
+        <Provider>AzureSql</Provider>
+        <Server>target-server.database.windows.net</Server>
+        <Database>TargetDB</Database>
+        <AuthType>AzureCli</AuthType>
+        <UserId></UserId>
+        <Password></Password>
+    </TargetConnection>
+
+    <Tables>
+        <!-- Example: Table with transformations (references a table mapping XML file) -->
+        <Table order="1" tableFilter="true">
+            <File>SourceDB.Customers.xml</File>
+            <Source schema="dbo" table="Customers" />
+            <Target schema="dbo" table="tblCustomers" />
+            <BatchColumn>CustID</BatchColumn>
+            <ColumnMappings>
+                <Column source="CustID" target="CustomerID" />
+                <Column source="Email" target="EmailAddress" />
+                <Column source="CreatedDate" target="CreatedDate" sourceFormat="yyyy-MM-dd" />
+            </ColumnMappings>
+        </Table>
+
+        <!-- Example: Table with transformations and key lookup dependency -->
+        <Table order="2" tableFilter="true">
+            <File>SourceDB.Orders.xml</File>
+            <Source schema="dbo" table="Orders" />
+            <Target schema="sales" table="CustomerOrders" />
+            <BatchColumn>OrderID</BatchColumn>
+            <ColumnMappings>
+                <Column source="OrderID" target="OrderID" />
+                <Column source="OrderDate" target="OrderDate" sourceFormat="yyyy-MM-dd HH:mm:ss" />
+                <Column source="TotalAmt" target="TotalAmount" />
+            </ColumnMappings>
+        </Table>
+
+        <!-- Example: Simple table with no transformations (no File reference needed) -->
+        <Table order="3">
+            <Source schema="dbo" table="Countries" />
+            <Target schema="ref" table="Countries" />
+            <BatchColumn>CountryCode</BatchColumn>
+            <ColumnMappings>
+                <Column source="CountryCode" target="CountryCode" />
+                <Column source="CountryName" target="Name" />
+            </ColumnMappings>
+        </Table>
+    </Tables>
+</MigrationConfig>

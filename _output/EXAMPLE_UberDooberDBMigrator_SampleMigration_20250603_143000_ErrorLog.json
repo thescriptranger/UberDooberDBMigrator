@@ -1,0 +1,38 @@
+{
+    "migrationName": "SampleMigration",
+    "migrationRunId": "20250603_143000",
+    "generatedAt": "2025-06-03T15:45:32Z",
+    "totalEntries": 5,
+    "entries": [
+        {
+            "timestamp": "2025-06-03T14:35:22Z",
+            "level": "Error",
+            "table": "dbo.Customers",
+            "message": "Row insert failed for key 45892: String or binary data would be truncated in table 'TargetDB.dbo.tblCustomers', column 'FullName'."
+        },
+        {
+            "timestamp": "2025-06-03T14:38:45Z",
+            "level": "Error",
+            "table": "dbo.Customers",
+            "message": "Row insert failed for key 67234: Cannot insert the value NULL into column 'EmailAddress', table 'TargetDB.dbo.tblCustomers'; column does not allow nulls."
+        },
+        {
+            "timestamp": "2025-06-03T14:42:11Z",
+            "level": "Error",
+            "table": "dbo.Customers",
+            "message": "Row insert failed for key 89001: Conversion failed when converting date and/or time from character string."
+        },
+        {
+            "timestamp": "2025-06-03T15:12:33Z",
+            "level": "Error",
+            "table": "dbo.Orders",
+            "message": "Row insert failed for key 1045287: Key mapping not found for OldKey: 99999 in SourceDB.Customers"
+        },
+        {
+            "timestamp": "2025-06-03T15:28:47Z",
+            "level": "Error",
+            "table": "dbo.Orders",
+            "message": "Row insert failed for key 1089234: Arithmetic overflow error converting numeric to data type decimal."
+        }
+    ]
+}

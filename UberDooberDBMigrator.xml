@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+    UberDooberDBMigrator Global Configuration
+    
+    This file contains global variables and settings for the migration script.
+    Modify these values to configure script behavior without editing the PowerShell script directly.
+-->
+<configuration>
+    <variables>
+        <!-- Environment identifier (e.g., DEV, QA, UAT, PROD) -->
+        <Environment>DEV</Environment>
+        
+        <!-- Default log level if not specified via parameter (Error, Warning, Info, Verbose, Debug) -->
+        <DefaultLogLevel>Info</DefaultLogLevel>
+    </variables>
+</configuration>

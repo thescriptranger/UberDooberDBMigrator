@@ -1,0 +1,102 @@
+{
+    "migrationName": "SampleMigration",
+    "validatedAt": "2025-06-03T14:20:00Z",
+    "isValid": false,
+    "summary": {
+        "tablesValidated": 3,
+        "errorsFound": 6,
+        "warningsFound": 2
+    },
+    "configuration": {
+        "isValid": false,
+        "errors": [
+            "Table mapping file not found: SourceDB.Products.xml"
+        ],
+        "warnings": []
+    },
+    "connections": {
+        "source": {
+            "isValid": true,
+            "provider": "Oracle",
+            "server": "oracle-prod.company.com",
+            "message": "Connection successful"
+        },
+        "target": {
+            "isValid": true,
+            "provider": "AzureSql",
+            "server": "target-server.database.windows.net",
+            "message": "Connection successful"
+        }
+    },
+    "tables": [
+        {
+            "sourceTable": "LEGACY.CUSTOMERS",
+            "targetTable": "dbo.tblCustomers",
+            "isValid": false,
+            "sourceRowCount": 125000,
+            "errors": [
+                "Source column 'CUST_EMAIL' does not exist in source table",
+                "Target column 'PhoneNumber' does not exist in target table",
+                "Batch column 'CUSTOMER_ID' does not exist in source table"
+            ],
+            "warnings": [
+                "Target column 'MiddleName' is not mapped and will use default value"
+            ],
+            "sampleData": []
+        },
+        {
+            "sourceTable": "LEGACY.ORDERS",
+            "targetTable": "sales.CustomerOrders",
+            "isValid": false,
+            "sourceRowCount": 890000,
+            "errors": [
+                "KeyLookup sourceTable 'SourceDB.Customers' does not match any configured table",
+                "Lookup table is empty for column 'ORDER_STATUS'"
+            ],
+            "warnings": [
+                "Source column 'INTERNAL_NOTES' is not mapped and will be ignored"
+            ],
+            "sampleData": []
+        },
+        {
+            "sourceTable": "LEGACY.COUNTRIES",
+            "targetTable": "ref.Countries",
+            "isValid": true,
+            "sourceRowCount": 195,
+            "errors": [],
+            "warnings": [],
+            "sampleData": [
+                {
+                    "source": {
+                        "COUNTRY_CD": "US",
+                        "COUNTRY_NM": "United States"
+                    },
+                    "transformed": {
+                        "CountryCode": "US",
+                        "Name": "United States"
+                    }
+                },
+                {
+                    "source": {
+                        "COUNTRY_CD": "CA",
+                        "COUNTRY_NM": "Canada"
+                    },
+                    "transformed": {
+                        "CountryCode": "CA",
+                        "Name": "Canada"
+                    }
+                },
+                {
+                    "source": {
+                        "COUNTRY_CD": "GB",
+                        "COUNTRY_NM": "United Kingdom"
+                    },
+                    "transformed": {
+                        "CountryCode": "GB",
+                        "Name": "United Kingdom"
+                    }
+                }
+            ]
+        }
+    ]
+}
